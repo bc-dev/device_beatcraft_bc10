@@ -1,0 +1,10 @@
+on boot
+    setprop ro.radio.use-ppp no
+    setprop ro.radio.noril yes
+    setprop net.eth0.dns1 8.8.8.8
+    setprop net.dns1 8.8.8.8
+
+#LAN
+service lan-setup /system/etc/init.omap3.sh
+    oneshot
+

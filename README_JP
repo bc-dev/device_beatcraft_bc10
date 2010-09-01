@@ -1,0 +1,234 @@
+﻿### README_JP
+### README_JP は bc10 用 android-2.2_r1.1 対応ディレクトリ beatcraft/ 以下 bc10/ および
+### patch-bc10/ に関する説明を記載しています。
+### 
+#
+# bc10 はオープン・ソース・ガジェットです。
+# 拡張、変更、公開等は自己責任において行ってください。bc10 で使用されている
+# 各ハードウェアおよびソフトウェアなどのライセンスは、それぞれのライセンス規約に従います。
+# また、予告無くディレクトリおよびファイルの内容を変更することがあります。
+#
+# その他 一般に会社名、製品名は各社の商標または登録商標です。
+#
+# 08/23/2010
+
+- README_JP 目次
+1. 注意事項
+2. 配置
+3. 構成概略
+4. 各ディレクトリ/ファイル内容
+5. スクリプト実行について
+
+1.注意事項
+
+out/target/product/bc10 以下に bc10用 android イメージ作成をするようにスクリプトを作成しています。
+ビルドイメージ作成後、make clean 、make clobber を実行するとproduct 以下、作成イメージも削除されます。
+
+
+
+2. 配置
+
+beatcraft ディレクトリ以下を android ソースファイル内 device 以下に
+配置してください。
+
+3. 構成概略
+beatcraft.tar.gz 解凍後のディレクトリ構成は以下のようになっています。
+
+beatcraft/
+  |
+  |--- README_JP
+  |
+  |--- bc10/
+  |       |
+  |       -- bc10 用 android-2.2_r1.1 設定ファイル
+  |
+  ---- patch-for-bc10/
+             |
+             |- bc10-patch.sh
+             |
+             |- image/
+             |     |
+             |     -- bc10-image.sh
+             |
+             |- patch/
+                   |
+                   |- bionic/
+                   |
+                   |- frameworks/
+                   |
+                   |- libpixelflinger.tar.gz
+                   |
+                   |- libcameraservice.tar.gz
+                   |
+                   |- hardware/
+                   |
+                   |- system/
+
+
+4. 各ディレクトリ/ファイル内容
+
+- beatcraft/bc10 
+beatcraft/bc10 には bc10 用 android-2.2_r1.1 をビルドするための各種設定ファイルが存在します。
+
+bc10/ には以下のファイルが存在します。
+
+* AndroidBoard.mk
+alsa.conf、keylayout、init.rcなど設定ファイルのコピー先、コピー元を指定するファイルです。
+
+* AndroidProducts.mk
+android をビルドする際の mk ファイルを指定するファイルです。
+このファイルでは bc10.mk を指定しています。
+
+* BoardConfig.mk
+bc10 用ハードウェア用設定ファイルです。
+
+* Rules.make
+SGX SDK をビルドする際に使用する編集済みビルド設定ファイルです。
+
+* asound.conf
+android で alsa を使用のための設定ファイルです。
+
+* bc10.mk
+ビルド時に追加するソフトウェア、製品名、言語の設定ファイルです。
+
+* init.omap3.rc
+追加設定を読み込むための機種固有起動設定ファイルです。
+
+* init.omap3.sh
+network の upとdhcp の取得を行う設定ファイルです。
+
+* init.rc
+bc10 用 android 起動設定ファイルです。
+
+* qwerty.kl
+qwerty keyboard 用キー配列設定ファイルです。
+
+* system.prop
+bc10 用 android system 用設定ファイルです。
+
+* vendorsetup.sh
+lunch コマンドで bc10-eng の設定を読み込ませるためのファイルです。
+
+* vold.fstab
+SDカードをマウントするための設定ファイルです。
+
+
+- beatcraft/patch-bc10
+beatcraft/patch-bc10 には android-2.2_r1.1 を bc10向けに最適化してビルドするためのpatchファイル/ディレクトリ
+および bc10 イメージ作成スクリプトなどが存在します。
+
+patch-for-bc10/ には以下のファイル/ディレクトリが存在します。
+
+* bc10-patch.sh
+patch/ 以下に存在するファイルを一括で android-2.2_r1.1 に適用するスクリプトです。
+{HOME}/bc10 に android-2.2_r1.1 のソースファイルがある前提で記載しています。
+修正が必要な場合は適宜修正をしてください。
+基本的な動作は元ファイル名に .orig を付加してリネームし、
+patch/ 以下の修正済み同名ファイルをコピーして置き換えています。
+
+- image/
+* bc10-image.sh
+ビルド後 bc10 に必要な android rootfilesystem を１つのディレクトリにまとめるためのスクリプトです。
+
+- patch/
+bc10 向けに最適化してビルドするための android-2.2_r1.1 用の patchファイル/ディレクトリが存在します。
+
+-- bionic/libc/common/linux
+* omap_resizer.h
+omap用画面リサイズ用ヘッダーファイルです。
+
+-- frameworks
+* frameworks/base/core/java/android/view/RawInputEvent.java
+* frameworks/base/include/ui/EventHub.h
+* frameworks/base/libs/ui/EventHub.cpp
+* frameworks/base/services/java/com/android/server/InputDevice.java
+* frameworks/base/services/java/com/android/server/KeyInputQueue.java
+* frameworks/base/services/java/com/android/server/WindowManagerService.java
+* frameworks/base/services/java/com/android/server/NativeDaemonConnector.java
+マウス対応、マウスカーソル表示の追加用のファイルです。
+
+* frameworks/base/libs/rs/Android.mk
+* frameworks/base/graphics/jni/Android.mk.patch
+標準ビルド対象でない libRS (RenderScript)を必ずビルドするよう指定するファイルです。
+
+* frameworks/base/media/libstagefright/omx/Android.mk.patched
+* frameworks/base/media/libstagefright/omx/OMXMaster.cpp
+
+-- system
+* system/core/init/devices.c
+* libcameraservice.tar.gz
+v4l2インタフェースを使用したUSBカメラ用ハードウェアライブラリ用のファイルです。
+
+* libpixelflinger.tar.gz
+システムの描画の基礎ライブラリにARMv6およびARMv7対応を追加したファイルです。
+
+- hardware/
+* libhardware/include/hardware/overlay.h
+
+* ti/omap3.tar.gz
+
+** ti/omap3/libgralloc/          
+omap3530 に最適化した Graphic memory allocator 用のディレクトリです。
+
+** ti/omap3/libopencorehw/       
+opencore を hardware overlay 対応にするライブラリを含んだディレクトリです。
+
+** ti/omap3/liboverlay/          
+omap3530 に最適化した hardware overlay library 用のディレクトリです。
+
+** ti/omap3/libstagefrighthw/    
+stagefright を hardware overlay 対応にするライブラリを含んだディレクトリです。
+
+
+5. bc10 用スクリプト実行、ビルドおよびイメージ作成スクリプトの実行について
+注：android-2.2_r1.1 のソースファイルは {HOME}/bc10 にありbeatcraft/は
+{HOME}/bc10/device 以下にある前提で記載しています。
+
+- パッチスクリプトの実行
+
+ $ cd {HOME}/bc10/device/beatcraft/patch-for-bc10
+ $ ./bc10-patch.sh
+ 
+- ビルドの実行
+
+ $ cd {HOME}/bc10
+
+source build/envsetup.shを実行するとdevice/beatcraft/bc10/vendersetup.sh 
+が読み込まれていることを確認します。
+
+ $ source build/envsetup.sh
+ including device/beatcraft/bc10/vendorsetup.sh
+ including device/htc/dream/vendorsetup.sh
+ including device/htc/passion/vendorsetup.sh
+ including device/htc/sapphire/vendorsetup.sh
+
+lunch bc10-eng を実行すると以下のように表示されます。
+ $ lunch bc10-eng
+
+ ============================================
+ PLATFORM_VERSION_CODENAME=REL
+ PLATFORM_VERSION=2.2
+ TARGET_PRODUCT=bc10
+ TARGET_BUILD_VARIANT=eng
+ TARGET_SIMULATOR=false
+ TARGET_BUILD_TYPE=release
+ TARGET_BUILD_APPS=
+ TARGET_ARCH=arm
+ HOST_ARCH=x86
+ HOST_OS=linux
+ HOST_BUILD_TYPE=release
+ BUILD_ID=FRF91
+ ============================================
+ 
+これで準備が完了しましたのでmake を実行します。
+ $ make
+
+- イメージ作成スクリプトの実行
+ビルド完了後、{HOME}/bc10/device/beatcraft/patch-for-bc10/image にて
+bc10-image.shを実行することで、ビルド完了後のandroid rootfilesystemを
+1つのディレクトリにまとめます。
+
+ $ {HOME}/bc10/device/beatcraft/patch-for-bc10/image
+ $ ./bc10-image.sh
+ $ ls {HOME}/bc10/out/target/product/bc10/bc10-image/
+
