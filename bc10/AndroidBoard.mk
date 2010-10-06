@@ -30,3 +30,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/init.omap3.sh:system/etc/init.omap3.sh
 
+# gps_init.sh
+#
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/gps_init.sh:root/gps_init.sh
