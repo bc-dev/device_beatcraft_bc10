@@ -1,4 +1,8 @@
 #!/bin/bash
+##### file number is .1, .2, .3, .4, ....
+##### tar  number is .50, .51, ....
+##### Section EX is adding new files.
+
 echo "Start bc10-patch.sh"
 echo "Start backup orginal files ... "
 echo "cd bc10-android-dir"
@@ -106,6 +110,15 @@ else
     cp frameworks/base/media/libstagefright/omx/OMXMaster.cpp frameworks/base/media/libstagefright/omx/OMXMaster.cpp.orig
 fi
 
+echo ".12"
+if [ -e "frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig" ];then
+    echo "Exist packages/SettingsProvider/res/values/defaults.xml.orig"
+    echo "Skip"
+else
+    echo "Copy frameworks/base/packages/SettingsProvider/res/values/defaults.xml .orig"
+    cp frameworks/base/packages/SettingsProvider/res/values/defaults.xml frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig
+fi
+
 
 
 cd frameworks/base/camera
@@ -171,7 +184,7 @@ echo "Start Section3"
 echo "Section3 copy original hardware/ files "
 cd hardware/ti/
 pwd
-echo .1
+echo .50
 if [ -e "omap3.orig.tar.gz" ];then
     echo "Exist omap3.orig.tar.gz"
     echo "delete omap3/"
@@ -243,16 +256,88 @@ sleep 2
 cd ${HOME}/bc10
 cd hardware
 pwd
-echo ".2"
+echo ".1"
 echo " copy orignal libhardware/include/hardware/overlay.h"
 if [ -e "libhardware/include/hardware/overlay.h.orig" ];then
     echo "Exist .orig"
-    echo "Skip .2"
+    echo "Skip .1"
 else
     echo "libhardware/include/hardware/overlay.h"
     cp libhardware/include/hardware/overlay.h libhardware/include/hardware/overlay.h.orig 
 fi
 
+echo ".2"
+echo " copy orignal libhardware/Android.mk"
+if [ -e "libhardware/Android.mk.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .2"
+else
+    echo "libhardware/Android.mk"
+    cp libhardware/Android.mk libhardware/Android.mk.orig
+fi
+
+echo ".3"
+echo " copy orignal libhardware_legacy/gps/Android.mk"
+if [ -e "libhardware_legacy/gps/Android.mk.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .3"
+else
+    echo "hardware/libhardware_legacy/gps/Android.mk"
+    cp hardware/libhardware_legacy/gps/Android.mk hardware/libhardware_legacy/gps/Android.mk.orig
+fi
+ 
+echo ".4"
+echo " copy orignal libhardware_legacy/gps/gps.cpp"
+if [ -e "libhardware_legacy/gps/gps.cpp.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .3"
+else
+    echo "hardware/libhardware_legacy/gps/gps.cpp"
+    cp hardware/libhardware_legacy/gps/gps.cpp hardware/libhardware_legacy/gps/gps.cpp.orig
+fi
+
+echo "End Section3"
+
+sleep 2
+echo "cd bc10-android-dir"
+cd ${HOME}/bc10
+
+
+echo "Start Section4"
+echo "Section4 copy original device/common files "
+cd device/common
+pwd
+echo ".1"
+echo " copy orignal gps/gps.conf_AS_SUPL"
+if [ -e "gps/gps.conf_AS_SUPL.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .1"
+else
+    echo "gps/gps.conf_AS_SUPL"
+    cp gps/gps.conf_AS_SUPL gps/gps.conf_AS_SUPL.orig
+fi
+
+echo ".2"
+echo " copy orignal gps/gps.conf_EU_SUPL"
+if [ -e "gps/gps.conf_EU_SUPL.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .2"
+else
+    echo "gps/gps.conf_EU_SUPL"
+    cp gps/gps.conf_EU_SUPL gps/gps.conf_EU_SUPL.orig
+fi
+
+echo ".3"
+echo " copy orignal gps/gps.conf_US_SUPL"
+if [ -e "gps/gps.conf_US_SUPL.orig" ];then
+    echo "Exist .orig"
+    echo "Skip .3"
+else
+    echo "gps/gps.conf_US_SUPL"
+    cp gps/gps.conf_US_SUPL gps/gps.conf_US_SUPL.orig
+fi
+
+sleep 2
 echo "End Section3"
 
 sleep 2
@@ -300,6 +385,9 @@ echo ".10"
 
 echo ".11"
     cp device/beatcraft/patch-for-bc10/patch/frameworks/base/media/libstagefright/omx/OMXMaster.cpp frameworks/base/media/libstagefright/omx/OMXMaster.cpp
+echo ".12"
+    cp device/beatcraft/patch-for-bc10/patch/frameworks/base/packages/SettingsProvider/res/values/defaults.xml frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+
 echo ".50"
     tar zxf device/beatcraft/patch-for-bc10/patch/libcameraservice.tar.gz -C frameworks/base/camera/
 
@@ -309,13 +397,11 @@ echo .1
     cp device/beatcraft/patch-for-bc10/patch/system/core/init/devices.c system/core/init/devices.c
 ###    cp device/beatcraft/patch-for-bc10/patch/system/vold/Volume.cpp system/vold/Volume.cpp
 echo .50
-echo "lay out changed libpixelflinger/"
     tar zxf device/beatcraft/patch-for-bc10/patch/libpixelflinger.tar.gz -C system/core/
 
 
 echo "Section C3 copy changed files to hardware/"
-echo ".1"
-echo "ti/omap3"
+echo ".50"
 ##   cp -fr device/beatcraft/patch-for-bc10/patch/hardware/ti/omap3 hardware/ti/omap3
     tar zxf device/beatcraft/patch-for-bc10/patch/hardware/ti/omap3.tar.gz -C hardware/ti/
 
@@ -323,15 +409,41 @@ echo "ti/omap3"
 ##    cp -fr device/beatcraft/patch-for-bc10/patch/hardware/ti/omap3/libopencorehw hardware/ti/omap3/
 ##    cp -fr device/beatcraft/patch-for-bc10/patch/hardware/ti/omap3/liboverlay hardware/ti/omap3/
 ##    cp -fr device/beatcraft/patch-for-bc10/patch/hardware/ti/omap3/libstagefrighthw hardware/ti/omap3/
-echo ".2"
-echo "libhardware/"
+echo ".1"
     cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware/include/hardware/overlay.h hardware/libhardware/include/hardware/overlay.h 
+
+echo ".2"
+    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware/Android.mk libhardware/Android.mk
+
+echo ".3"
+    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware_legacy/gps/Android.mk hardware/libhardware_legacy/gps/Android.mk
+
+echo ".4"
+    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware_legacy/gps/gps.cpp hardware/libhardware_legacy/gps/gps.cpp
+
+echo "Section C4 copy changed files to device/common"
+
+echo ".1"
+    cp device/beatcraft/patch-for-bc10/patch/device/common/gps/gps.conf_AS_SUPL device/common/gps/gps.conf_AS_SUPL
+
+echo ".2"
+    cp device/beatcraft/patch-for-bc10/patch/device/common/gps/gps.conf_EU_SUPL device/common/gps/gps.conf_EU_SUPL
+
+echo ".3"
+    cp device/beatcraft/patch-for-bc10/patch/device/common/gps/gps.conf_US_SUPL device/common/gps/gps.conf_US_SUPL
 
 echo "Section Ex1 copy frameworks/base/data/sounds/Android.mk"
     cp frameworks/base/data/sounds/AudioPackage4.mk frameworks/base/data/sounds/Android.mk
 
 echo "Section Ex2 copy bionic/libc/common/linux/omap_resizer.h"
     cp device/beatcraft/patch-for-bc10/patch/bionic/libc/kernel/common/linux/omap_resizer.h bionic/libc/kernel/common/linux/omap_resizer.h
+
+echo "Section EX3 copy libhardware/modules/sensors"
+    tar zxf device/beatcraft/patch-for-bc10/patch/hardware/libhardware/modules/sensors.tar.gz -C hardware/libhardware/modules/
+
+echo "Section EX4 copy libhardware_legacy/gps/gps_bc10.c"
+    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware_legacy/gps/gps_bc10.c hardware/libhardware_legacy/gps/gps_bc10.c
+ 
 
 echo "End copy files"
 echo "Whole process is completed !"
