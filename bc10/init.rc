@@ -267,6 +267,9 @@ on boot
     # change permission for GPS
     chmod 0666 /dev/ttyS1
 
+    # change permission for sensors
+    chmod 0666 /dev/ami602
+
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
