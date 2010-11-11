@@ -283,7 +283,7 @@ if [ -e "libhardware_legacy/gps/Android.mk.orig" ];then
     echo "Skip .3"
 else
     echo "hardware/libhardware_legacy/gps/Android.mk"
-    cp hardware/libhardware_legacy/gps/Android.mk hardware/libhardware_legacy/gps/Android.mk.orig
+    cp libhardware_legacy/gps/Android.mk libhardware_legacy/gps/Android.mk.orig
 fi
  
 echo ".4"
@@ -293,7 +293,7 @@ if [ -e "libhardware_legacy/gps/gps.cpp.orig" ];then
     echo "Skip .3"
 else
     echo "hardware/libhardware_legacy/gps/gps.cpp"
-    cp hardware/libhardware_legacy/gps/gps.cpp hardware/libhardware_legacy/gps/gps.cpp.orig
+    cp libhardware_legacy/gps/gps.cpp libhardware_legacy/gps/gps.cpp.orig
 fi
 
 echo "End Section3"
@@ -413,7 +413,7 @@ echo ".1"
     cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware/include/hardware/overlay.h hardware/libhardware/include/hardware/overlay.h 
 
 echo ".2"
-    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware/Android.mk libhardware/Android.mk
+    cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware/Android.mk hardware/libhardware/Android.mk
 
 echo ".3"
     cp device/beatcraft/patch-for-bc10/patch/hardware/libhardware_legacy/gps/Android.mk hardware/libhardware_legacy/gps/Android.mk
