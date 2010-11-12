@@ -110,14 +110,16 @@ else
     cp frameworks/base/media/libstagefright/omx/OMXMaster.cpp frameworks/base/media/libstagefright/omx/OMXMaster.cpp.orig
 fi
 
-echo ".12"
-if [ -e "frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig" ];then
-    echo "Exist packages/SettingsProvider/res/values/defaults.xml.orig"
-    echo "Skip"
-else
-    echo "Copy frameworks/base/packages/SettingsProvider/res/values/defaults.xml .orig"
-    cp frameworks/base/packages/SettingsProvider/res/values/defaults.xml frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig
-fi
+# echo ".12"
+# if [ -e "frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig" ];then
+#     echo "Exist packages/SettingsProvider/res/values/defaults.xml.orig"
+#     echo "Skip"
+# else
+#     echo "Copy frameworks/base/packages/SettingsProvider/res/values/defaults.xml .orig"
+#     cp frameworks/base/packages/SettingsProvider/res/values/defaults.xml frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig
+#     # giped for avoid duplicate define error when makeing
+#    gzip frameworks/base/packages/SettingsProvider/res/values/defaults.xml.orig
+# fi
 
 
 
