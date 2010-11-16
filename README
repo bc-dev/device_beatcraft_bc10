@@ -1,0 +1,66 @@
+﻿### README
+### README は bc10 用 android-2.2_r1.1 対応ディレクトリ beatcraft/bc10 および
+### patch-for-bc10/ に関する簡易説明を記載しています。
+###
+#
+# bc10 はオープン・ソース・ガジェットです。
+# 拡張、変更、公開等は自己責任において行ってください。bc10 で使用されている
+# 各ハードウェアおよびソフトウェアなどのライセンスは、それぞれのライセンス規約に従います。
+# また、予告無くディレクトリおよびファイルの内容を変更することがあります。
+# 
+# その他 一般に会社名、製品名は各社の商標または登録商標です。
+#
+# 11/16/2010 fix some problems
+# 08/23/2010
+
+- README 目次
+1. 注意事項
+2. 配置
+3. 簡易説明
+
+
+1.注意事項
+
+android-2.2_r1.1 を bc10 用にビルドするための patch 群、
+patch を行う script、
+ビルド後 out/target/product/bc10 以下に 
+bc10用 android rootfs を作成するための script です。
+
+ビルドイメージ作成後 make clean 、make clobber を実行すると
+out/target/product 以下、out/ 以下の作成イメージが削除されます。
+
+
+2. 配置
+git clone で取得すると以下のようなファイル・ディレクトリ構成になっています。
+
+patch_to_android-2.2_r1.1_for_b10
+|-- README
+|-- bc10-patch.sh
+|-- mkbc10-image.sh
+`-- patches-for-bc10
+    |-- beatcraft.tar.gz
+    |-- bionic/
+    |-- device/
+    |-- frameworks/
+    |-- hardware/
+    |-- libcameraservice.tar.gz
+    |-- libpixelflinger.tar.gz
+    `-- system/
+
+
+3. 各ファイルの簡易説明
+bc10-patch.sh は android-2.2_r1.1 へ bc10用 patch を適用するスクリプトです。
+実行すると android-2.2_r1.1 のソースへ patch が行われ、
+ビルド用の設定ファイル device/beatcraft/bc10 が作成されます。
+
+patch-for-bc10/ 以下には各patch ファイルがあります。
+
+mkbc10-image.sh は make 終了後実行すると out/target/product/bc10/ に
+bc10 用の android rootfs を作成するスクリプトです。
+
+
+詳細な利用の手順については以下のページをご覧ください。
+http://labs.beatcraft.com/ja/index.php?bc10%2Ffroyo (Japanese)
+http://labs.beatcraft.com/en/index.php?bc10%2Ffroyo (English)
+
+
